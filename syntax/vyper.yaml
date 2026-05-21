@@ -8,9 +8,9 @@ rules:
     - preproc: "^\\s*#\\s*(pragma|@version)\\b.*$"
 
     # Declarations and definitions.
-    - statement: "\\b(def|event|struct|interface|flag|enum)\\b"
     - identifier.class: "\\b(event|struct|interface|flag|enum)\\s+[A-Za-z_][A-Za-z0-9_]*"
-    - identifier: "\\bdef\\s+[A-Za-z_][A-Za-z0-9_]*"
+    - identifier.function: "\\bdef\\s+[A-Za-z_][A-Za-z0-9_]*"
+    - statement: "\\b(def|event|struct|interface|flag|enum)\\b"
     - identifier: "\\b__(init|default)__\\b"
 
     # Decorators and mutability/visibility modifiers.
