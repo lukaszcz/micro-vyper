@@ -35,8 +35,9 @@ rules:
 
     # Environment variables and module namespaces.
     - constant: "\\b(self|msg|block|tx|chain)\\b"
-    - constant: "\\b(INF|ZERO_ADDRESS|ZERO_WEI|EMPTY_BYTES32|MAX_INT128|MIN_INT128|MAX_DECIMAL|MIN_DECIMAL|MIN_UINT256|MAX_UINT256)\\b"
-    - constant: "\\b(inf|zero_address|zero_wei|empty_bytes32|max_int128|min_int128|max_decimal|min_decimal|min_uint256|max_uint256)\\b"
+    # Note: no MIN_UINT256 — unsigned minimum is always 0.
+    - constant: "\\b(INF|ZERO_ADDRESS|ZERO_WEI|EMPTY_BYTES32|MAX_INT128|MIN_INT128|MAX_DECIMAL|MIN_DECIMAL|MAX_UINT256)\\b"
+    - constant: "\\b(inf|zero_address|zero_wei|empty_bytes32|max_int128|min_int128|max_decimal|min_decimal|max_uint256)\\b"
     # Lowercase true/false/none are Vyper <0.4 legacy forms, kept for readability.
     - constant.bool.true: "\\b(True|true)\\b"
     - constant.bool.false: "\\b(False|false)\\b"
@@ -47,6 +48,8 @@ rules:
 
     # Operators and delimiters.
     - symbol.operator: "(\\*\\*|//|<<|>>|[-+*/%&|^~!=<>]=?|:=|->|[.:,;])"
+    # Ellipsis (...) after dot operator so three-dot sequence wins per-char.
+    - constant: "\\.\\.\\."  # interface/abstract body placeholder
     - symbol.brackets: "([(){}]|\\[|\\])"
 
     # Numeric literals.
@@ -55,18 +58,17 @@ rules:
     - constant.number: "\\b0o(_?[0-7])+\\b"
     - constant.number: "\\b[0-9](_?[0-9])*(\\.([0-9](_?[0-9])*)?)?(e[+-]?[0-9](_?[0-9])*)?\\b"
 
-    # Strings, byte strings, and hex byte literals.
+    # Triple-quoted strings: no skip pattern, backslash cannot escape
+    # the three-char closing delimiter (matches Python3 convention in Micro).
     - constant.string:
         start: "[bBxX]?\"\"\""
         end: "\"\"\""
-        skip: "\\\\."
         rules:
             - constant.specialChar: "\\\\."
 
     - constant.string:
         start: "[bBxX]?'''"
         end: "'''"
-        skip: "\\\\."
         rules:
             - constant.specialChar: "\\\\."
 
