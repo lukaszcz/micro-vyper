@@ -1,0 +1,15 @@
+[{
+  "Name": "vyper",
+  "Description": "Syntax highlighting for the Vyper smart contract language",
+  "Tags": ["vyper", "ethereum", "syntax"],
+  "Website": "https://github.com/lukaszcz/micro-vyper",
+  "Versions": [
+    {
+      "Version": "0.1.0",
+      "Url": "https://github.com/lukaszcz/micro-vyper/archive/v0.1.0.zip",
+      "Require": {
+        "micro": ">=2.0.0"
+      }
+    }
+  ]
+}]
