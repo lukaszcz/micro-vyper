@@ -1,5 +1,6 @@
 #pragma version ^0.4.0
 #pragma nonreentrancy on
+#pragma optimize codesize
 
 event Payment:
     amount: indexed(uint256)
@@ -35,3 +36,7 @@ def quote_fee(value: uint256) -> uint256:
 def proxy(target: address, data: Bytes[4096]) -> Bytes[4096]:
     response: Bytes[4096] = raw_call(target, data, max_outsize=4096)
     return response
+
+@internal
+def _fail():
+    raise UNREACHABLE
