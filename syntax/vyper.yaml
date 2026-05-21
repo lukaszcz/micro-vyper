@@ -13,9 +13,14 @@ rules:
     - statement: "\\b(def|event|struct|interface|flag|enum)\\b"
     - identifier: "\\b__(init|default)__\\b"
 
-    # Decorators and mutability/visibility modifiers.
+    # Keywords with standalone usage: variable/event annotations and interface mutability.
+    - type.keyword: "\\b(public|view|pure|payable|nonpayable|reentrant|indexed|constant|immutable|transient)\\b"
+
+    # Decorators. Must come after type.keyword so that @keyword overrides the
+    # standalone color for keywords like @view, @payable, @reentrant that have
+    # dual usage. Decorator-only keywords (external, internal, deploy, etc.)
+    # are not in type.keyword, so they are only colored via this rule.
     - preproc: "^\\s*@(external|internal|deploy|view|pure|payable|nonpayable|nonreentrant|reentrant|raw_return|abstract|override)(\\([^)]*\\))?"
-    - type.keyword: "\\b(public|external|internal|deploy|view|pure|payable|nonpayable|nonreentrant|reentrant|raw_return|abstract|override|indexed|constant|immutable|transient)\\b"
 
     # Control flow, imports, calls, module composition, and declarations.
     - statement: "\\b(and|as|assert|break|continue|elif|else|exports|extcall|for|from|if|implements|import|in|initializes|is|log|not|or|pass|raise|range|return|staticcall|uses|while)\\b"
